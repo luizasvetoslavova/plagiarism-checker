@@ -1,31 +1,42 @@
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.HashSet;
 
 public class GoogleSearch {
-    public void search() {
+    // TODO Improve result text quality
+    // TODO fix MalformedURLException
+
+    public HashSet<PageResult> loadFirstFivePages(String query) {
+        HashSet<PageResult> pages = new HashSet<>();
+
+        for(int i = 0; i < 5; i++) {
+            pages.add(loadPage(query, i));
+        }
+        return pages;
+    }
+
+    private PageResult loadPage(String query, int resultIndex) {
         try {
-            String url = "https://www.google.com/search?q=" + "run over the mill sentence europe margin flight".replace(" ", "+");
+            String encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8.toString());
+            String url = "https://www.google.com/search?q=" + encodedQuery;
             Document doc = Jsoup.connect(url).get();
             Elements searchResults = doc.select("div.g");
 
-            if (!searchResults.isEmpty()) {
-                Element firstResult = searchResults.first();
-                String link = firstResult.select("a[href]").attr("href");
-                System.out.println("Link: " + link);
-                Document doc2 = Jsoup.connect(link).get();
-                System.out.println(doc2.text());
-            } else {
-                System.out.println("No search results found.");
-            }
+            Element result = searchResults.get(resultIndex);
+            String link = result.select("a[href]").attr("href");
+            Document doc2 = Jsoup.connect(link).get();
+            return new PageResult(link, doc2.text());
 
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("An error occurred during the search.");
         }
+        return null;
     }
 }
