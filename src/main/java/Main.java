@@ -12,7 +12,7 @@ public class Main {
                 " governed not by lowly appetites but by the pure wisdom of a philosopher-king.";
 
         String search = "where to find many books";
-        new GoogleSearch().loadFirstFivePages(search).forEach(page -> System.out.println(page.getLink()));
+        new GoogleSearch().loadFirstPages(search, 5).forEach(page -> System.out.println(page.getLink()));
     }
 }
 

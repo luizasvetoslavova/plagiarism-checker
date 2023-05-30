@@ -6,20 +6,22 @@ import java.util.stream.Collectors;
 
 public class PhraseExtractor {
 
-    public List<String> getRandomPhrases(String text) {
+    private int maxWordCountToIndex;
+
+    public List<String> getRandomPhrases(String text, int phraseCount, int minWordCount, int maxWordCount) {
         List<String> randomPhrases = new ArrayList<>();
 
-        for(int i = 0; i < 15; i++) {
-            randomPhrases.add(getRandomPhrase(text));
+        for (int i = 0; i < phraseCount; i++) {
+            randomPhrases.add(getRandomPhrase(text, minWordCount, maxWordCount));
         }
         return randomPhrases;
     }
 
-    private String getRandomPhrase(String text) {
+    private String getRandomPhrase(String text, int minWordCount, int maxWordCount) {
         List<String> words = (Arrays.stream(text.split(" ")).collect(Collectors.toList()));
 
-        int firstWordIndex = new Random().nextInt(words.size() - 14);
-        int wordCount = getRandomWordCount();
+        int firstWordIndex = new Random().nextInt(words.size() - maxWordCountToIndex);
+        int wordCount = getRandomWordCount(minWordCount, maxWordCount);
 
         StringBuilder randomPhrase = new StringBuilder();
         for (int i = 0; i < wordCount; i++) {
@@ -28,7 +30,8 @@ public class PhraseExtractor {
         return randomPhrase.toString();
     }
 
-    private int getRandomWordCount() {
-        return new Random().nextInt(15 + 1 - 10) + 10;
+    private int getRandomWordCount(int min, int max) {
+        this.maxWordCountToIndex = max - 1;
+        return new Random().nextInt(max + 1 - min) + min;
     }
 }

@@ -1,7 +1,7 @@
 public class PageResult {
 
-    private String link;
-    private String text;
+    private final String link;
+    private final String text;
 
     public PageResult(String link, String text) {
         this.link = link;

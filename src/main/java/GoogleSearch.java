@@ -12,10 +12,10 @@ public class GoogleSearch {
     // TODO Improve result text quality
     // TODO fix MalformedURLException
 
-    public HashSet<PageResult> loadFirstFivePages(String query) {
+    public HashSet<PageResult> loadFirstPages(String query, int pageCount) {
         HashSet<PageResult> pages = new HashSet<>();
 
-        for(int i = 0; i < 5; i++) {
+        for(int i = 0; i < pageCount; i++) {
             pages.add(loadPage(query, i));
         }
         return pages;
@@ -35,7 +35,6 @@ public class GoogleSearch {
 
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("An error occurred during the search.");
         }
         return null;
     }
