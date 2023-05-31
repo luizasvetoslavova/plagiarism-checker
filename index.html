@@ -6,7 +6,6 @@
     <style>
         body {
         background-color: #292929;
-
         position: absolute;
         top: 35%;
         transform: translate(100%, -50%);
@@ -21,36 +20,70 @@
         }
 
         h3 {
-        font-size: 30px;
+        font-size: 28px;
         text-align: center;
         color:white;
         font-family: cambria;
         }
 
-        .button1 {
+        h4 {
+        font-size: 20px;
+        text-align: center;
+        color:white;
+        font-family: cambria;
+        }
+
+        textarea {
+        height: 230px;
+        width: 440px;
+        border-radius: 4px;
+        font-family: sans-serif;
+        background-color: #EAFFD7;
+        color: #292929;
+        resize: none;
+        }
+
+        textarea::placeholder {
+        color: #686868;
+        }
+
+        textarea:focus::placeholder {
+        color: transparent;
+        }
+
+        .btn1 {
         text-align: center;
         }
 
         button {
-        height: 3em;
-        width: 8em;
-        border: none;
-        border-radius: 15em;
+        height: 3.5em;
+        width: 7em;
+        border-radius: 2em;
         background: #B8F086;
-        font-size: 17px;
+        font-size: 15px;
         color: #2A2A2A;
-        font-family: inherit;
-        font-weight: 500;
-        font-family: cambria;
+        font-family: sans-serif;
+        font-size: 15px;
+        text-align: center;
         }
 
         button:hover {
         background-color:#ECFCDD;
-        transition: 0.1s;
+        }
+
+        .results {
+        color: white;
+        text-align: center;
+
         }
 </style>
 </head>
 <body>
+<br>
+<br>
+<br>
+<br>
+<br>
 <h1>
     Copycat Web
 </h1>
@@ -58,9 +91,18 @@
     An accurate plagiarism detector.
 </h3>
 <br>
+<textarea maxlength="8000" placeholder="Write your text here..." ></textarea>
 <br>
-<div class="button1">
-<button>Upload document</button>
+<br>
+<div class="btn1">
+    <button>
+        Check Plagiarism
+    </button>
+</div>
+<div>
+    <p>
+
+    </p>
 </div>
 </body>
 </html>
