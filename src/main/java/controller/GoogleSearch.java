@@ -1,3 +1,5 @@
+package controller;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -9,9 +11,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 
 public class GoogleSearch {
+
     // TODO Improve result text quality
     // TODO fix MalformedURLException
-
     public HashSet<PageResult> loadFirstPages(String query, int pageCount) {
         HashSet<PageResult> pages = new HashSet<>();
 
