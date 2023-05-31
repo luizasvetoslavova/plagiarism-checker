@@ -74,9 +74,13 @@
         .results {
         color: white;
         text-align: center;
-
         }
-</style>
+    </style>
+    <script>
+       function checkPlagiarism() {
+          window.open("http://youtu.be/xvFZjo5PgG0");
+       }
+    </script>
 </head>
 <body>
 <br>
@@ -91,18 +95,15 @@
     An accurate plagiarism detector.
 </h3>
 <br>
-<textarea maxlength="8000" placeholder="Write your text here..." ></textarea>
-<br>
-<br>
-<div class="btn1">
-    <button>
-        Check Plagiarism
-    </button>
-</div>
-<div>
-    <p>
-
-    </p>
-</div>
+<form name="checkText" method="post">
+    <textarea name="text" maxlength="8000" placeholder="Write your text here..."></textarea>
+    <br>
+    <br>
+    <div class="btn1">
+        <button type="submit" onclick="checkPlagiarism()">
+            Check Plagiarism
+        </button>
+    </div>
+</form>
 </body>
 </html>

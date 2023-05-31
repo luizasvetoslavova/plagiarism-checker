@@ -10,24 +10,20 @@ public class ProgramRunner {
     int pageCount;
 
     public ProgramRunner(String text) {
-        this.phraseCount = 1;
+        this.phraseCount = 5;
         this.minWordCount = 15;
         this.maxWordCount = 20;
-        this.pageCount = 1;
+        this.pageCount = 5;
         this.text = text;
     }
 
-    public void runProgram() {
+    public String runProgram() {
         List<String> plagLinks = new ArrayList<>();
         List<Double> plagPercentages = new ArrayList<>();
-
-//        GoogleSearch googleSearch = new GoogleSearch();
-//        List<String> phrases = new PhraseExtractor().getRandomPhrases(text, phraseCount, minWordCount, maxWordCount);
-//        TextComparer textComparer = new TextComparer();
-
         sortPlagiarized(new PhraseExtractor().getRandomPhrases(text, phraseCount, minWordCount, maxWordCount),
                 new GoogleSearch(), new TextComparer(), plagLinks, plagPercentages);
-        printResults(plagLinks, plagPercentages);
+
+        return getResults(plagLinks, plagPercentages);
     }
 
     private void sortPlagiarized(List<String> phrases, GoogleSearch googleSearch, TextComparer textComparer,
@@ -43,10 +39,12 @@ public class ProgramRunner {
         }
     }
 
-    private void printResults(List<String> plagLinks, List<Double> plagPercentages) {
+    private String getResults(List<String> plagLinks, List<Double> plagPercentages) {
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < plagLinks.size(); i++) {
-            System.out.println("Link: " + plagLinks.get(i) + " ");
-            System.out.println("Plagiarism percentage: " + plagPercentages.get(i) + " \n");
+            sb.append("Link: ").append(plagLinks.get(i)).append(", ")
+                    .append("Plagiarism percentage: ").append(plagPercentages.get(i)).append(" \n");
         }
+        return sb.toString();
     }
 }
