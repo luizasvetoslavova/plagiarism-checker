@@ -18,6 +18,8 @@ public class TextComparer {
         int distance = calculateDistance(text, pageResult.getText());
         int maxLength = Math.max(text.length(), pageResult.getText().length());
         double similarity = 1.0 - ((double) distance / maxLength);
+
+        //TODO Truncate the Double Value to 2 Decimal Places
         return similarity * 100;
     }
 

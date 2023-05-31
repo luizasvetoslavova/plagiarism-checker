@@ -18,6 +18,7 @@ public class ProgramRunner {
     }
 
     public void runProgram() {
+        //TODO try to Map links + percentages
         List<String> plagLinks = new ArrayList<>();
         List<Double> plagPercentages = new ArrayList<>();
 
