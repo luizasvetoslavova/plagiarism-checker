@@ -1,56 +1,83 @@
 package controller;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
+
+//TODO change similarity check method
 public class TextComparer {
+    private final double percentageThreshold;
 
-    //TODO change similarity check method
+    public TextComparer(double percentageThreshold) {
+        this.percentageThreshold = percentageThreshold;
+    }
+
     public boolean isPlagiarized(String text, PageResult pageResult) {
-        int distance = calculateDistance(text, pageResult.getText());
-        int maxLength = Math.max(text.length(), pageResult.getText().length());
-        double similarity = 1.0 - ((double) distance / maxLength);
-
-        boolean isPlagiarized = similarity * 100 > 10;
-        setPageStatus(isPlagiarized, pageResult);
-
-        return isPlagiarized;
+        double plagiarismPercentage = checkPlagiarismPercentage(text, pageResult.getText());
+        pageResult.setPlagiarismPercentage(plagiarismPercentage);
+        return plagiarismPercentage > percentageThreshold;
     }
 
-    public double plagiarismPercentage(String text, PageResult pageResult) {
-        int distance = calculateDistance(text, pageResult.getText());
-        int maxLength = Math.max(text.length(), pageResult.getText().length());
-        double similarity = 1.0 - ((double) distance / maxLength);
-
-        //TODO Truncate the Double Value to 2 Decimal Places
-        return similarity * 100;
+    private double checkPlagiarismPercentage(String text1, String text2) {
+        long hash1 = calculateSimHash(text1);
+        long hash2 = calculateSimHash(text2);
+        int distance = calculateHammingDistance(hash1, hash2);
+        return (64.0 - distance) / 64.0 * 100.0;
     }
 
-    private void setPageStatus(boolean isPlagiarized, PageResult pageResult) {
-        if (isPlagiarized) {
-            pageResult.setTextStatus(TextStatus.PLAGIARIZED);
-        } else {
-            pageResult.setTextStatus(TextStatus.UNIQUE);
-        }
-    }
+    private long calculateSimHash(String text) {
+        Map<String, Integer> wordFrequencies = new HashMap<>();
 
-    private static int calculateDistance(String text1, String text2) {
-        int[][] dp = new int[text1.length() + 1][text2.length() + 1];
+        String[] words = text.toLowerCase().split("\\s+");
 
-        for (int i = 0; i <= text1.length(); i++) {
-            dp[i][0] = i;
+        for (String word : words) {
+            int frequency = wordFrequencies.getOrDefault(word, 0);
+            wordFrequencies.put(word, frequency + 1);
         }
 
-        for (int j = 0; j <= text2.length(); j++) {
-            dp[0][j] = j;
-        }
+        long[] wordHashes = new long[64];
 
-        for (int i = 1; i <= text1.length(); i++) {
-            for (int j = 1; j <= text2.length(); j++) {
-                if (text1.charAt(i - 1) == text2.charAt(j - 1)) {
-                    dp[i][j] = dp[i - 1][j - 1];
+        for (String word : wordFrequencies.keySet()) {
+            byte[] wordHash = calculateHash(word);
+
+            for (int i = 0; i < 64; i++) {
+                if (((wordHash[i / 8] >> (7 - (i % 8))) & 1) == 1) {
+                    wordHashes[i] += wordFrequencies.get(word);
                 } else {
-                    dp[i][j] = 1 + Math.min(dp[i - 1][j - 1], Math.min(dp[i][j - 1], dp[i - 1][j]));
+                    wordHashes[i] -= wordFrequencies.get(word);
                 }
             }
         }
-        return dp[text1.length()][text2.length()];
+
+        long simHash = 0;
+        for (int i = 0; i < 64; i++) {
+            if (wordHashes[i] >= 0) {
+                simHash |= (1L << (63 - i));
+            }
+        }
+
+        return simHash;
+    }
+
+    private int calculateHammingDistance(long hash1, long hash2) {
+        long xor = hash1 ^ hash2;
+        int distance = 0;
+        while (xor != 0) {
+            distance++;
+            xor &= (xor - 1);
+        }
+        return distance;
+    }
+
+    private byte[] calculateHash(String word) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            return digest.digest(word.getBytes(StandardCharsets.UTF_8));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

@@ -5,49 +5,39 @@ import java.util.*;
 public class ProgramRunner {
     String text;
     int phraseCount;
+    int pageCount;
     int minWordCount;
     int maxWordCount;
-    int pageCount;
+    double percentageThreshold;
 
     public ProgramRunner(String text) {
+        this.text = text;
         this.phraseCount = 1;
+        this.pageCount = 1;
         this.minWordCount = 15;
         this.maxWordCount = 20;
-        this.pageCount = 1;
-        this.text = text;
+        this.percentageThreshold = 50;
     }
 
     public void runProgram() {
-        //TODO try to Map links + percentages
-        List<String> plagLinks = new ArrayList<>();
-        List<Double> plagPercentages = new ArrayList<>();
-
-//        GoogleSearch googleSearch = new GoogleSearch();
-//        List<String> phrases = new PhraseExtractor().getRandomPhrases(text, phraseCount, minWordCount, maxWordCount);
-//        TextComparer textComparer = new TextComparer();
-
-        sortPlagiarized(new PhraseExtractor().getRandomPhrases(text, phraseCount, minWordCount, maxWordCount),
-                new GoogleSearch(), new TextComparer(), plagLinks, plagPercentages);
-        printResults(plagLinks, plagPercentages);
+        showPlagiarized(new PhraseExtractor().getRandomPhrases(text, phraseCount, minWordCount, maxWordCount),
+                new GoogleSearch(), new TextComparer(percentageThreshold));
     }
 
-    private void sortPlagiarized(List<String> phrases, GoogleSearch googleSearch, TextComparer textComparer,
-                                 List<String> plagLinks, List<Double> plagPercentages) {
+    private void showPlagiarized(List<String> phrases, GoogleSearch googleSearch, TextComparer textComparer) {
         for (int i = 0; i < phraseCount; i++) {
             googleSearch.loadFirstPages(phrases.get(i), pageCount)
                     .forEach(page -> {
                         if (textComparer.isPlagiarized(text, page)) {
-                            plagLinks.add(page.getLink());
-                            plagPercentages.add(textComparer.plagiarismPercentage(text, page));
+                            printResults(page);
                         }
                     });
         }
     }
 
-    private void printResults(List<String> plagLinks, List<Double> plagPercentages) {
-        for (int i = 0; i < plagLinks.size(); i++) {
-            System.out.println("Link: " + plagLinks.get(i) + " ");
-            System.out.println("Plagiarism percentage: " + plagPercentages.get(i) + " \n");
-        }
+    //TODO frontend
+    private void printResults(PageResult page) {
+        System.out.println("Link: " + page.getLink() + " ");
+        System.out.println("Plagiarism percentage: " + page.getPlagiarismPercentage() + " \n");
     }
 }

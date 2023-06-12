@@ -4,7 +4,7 @@ public class PageResult {
 
     private final String link;
     private final String text;
-    private TextStatus textStatus;
+    private double plagiarismPercentage;
 
     public PageResult(String link, String text) {
         this.link = link;
@@ -19,11 +19,11 @@ public class PageResult {
         return text;
     }
 
-    public TextStatus getTextStatus() {
-        return textStatus;
+    public void setPlagiarismPercentage(double plagiarismPercentage) {
+        this.plagiarismPercentage = plagiarismPercentage;
     }
 
-    public void setTextStatus(TextStatus textStatus) {
-        this.textStatus = textStatus;
+    public double getPlagiarismPercentage() {
+        return plagiarismPercentage;
     }
 }
