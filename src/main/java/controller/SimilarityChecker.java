@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 //TODO change similarity check method
-public class TextComparer {
+public class SimilarityChecker {
     private final double percentageThreshold;
 
-    public TextComparer(double percentageThreshold) {
+    public SimilarityChecker(double percentageThreshold) {
         this.percentageThreshold = percentageThreshold;
     }
 

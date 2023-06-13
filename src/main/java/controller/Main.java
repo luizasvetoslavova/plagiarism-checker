@@ -2,7 +2,7 @@ package controller;
 
 public class Main {
     public static void main(String[] args) {
-        String query = "The Athenian philosopher Plato (c.428-347 B.C.) is one of the most important figures of the" +
+        String text1 = "The Athenian philosopher Plato (c.428-347 B.C.) is one of the most important figures of the" +
                 " Ancient Greek world and the entire history of Western thought. In his written dialogues he conveyed" +
                 " and expanded on the ideas and techniques of his teacher Socrates. " +
                 "" +
@@ -12,8 +12,8 @@ public class Main {
                 " individuals and for societies. In his most famous work, he envisioned a civilization" +
                 " governed not by lowly appetites but by the pure wisdom of a philosopher.";
 
-        // slightly altered query
-//        String para2 = "The Athenian philosopher Plato is one of the most important figures of the" +
+//        slightly altered text
+//        String text2 = "The Athenian philosopher Plato is one of the most important figures of the" +
 //                " Ancient Greek world and the history of Western thought. In his written dialogues he expressed" +
 //                " and expanded on the ideas and techniques of his teacher Socrates. " +
 //                "" +
@@ -23,6 +23,6 @@ public class Main {
 //                " individuals and societies. In his most famous work, he envisioned a civilization," +
 //                " governed not by lowly appetites but by pure wisdom.";
 
-        new ProgramRunner(query).runProgram();
+        new ProgramRunner(text1,10,5, 20, 10).run();
     }
 }

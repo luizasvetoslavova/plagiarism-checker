@@ -1,17 +1,17 @@
 package controller;
 
 public class PageResult {
-    private final String link;
+    private final String url;
     private final String text;
     private double plagiarismPercentage;
 
     public PageResult(String link, String text) {
-        this.link = link;
+        this.url = link;
         this.text = text;
     }
 
-    public String getLink() {
-        return link;
+    public String getUrl() {
+        return url;
     }
 
     public String getText() {

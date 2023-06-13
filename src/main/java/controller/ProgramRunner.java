@@ -9,33 +9,33 @@ public class ProgramRunner {
     int wordCountPerPhrase;
     double percentageThreshold;
 
-    public ProgramRunner(String text) {
+    public ProgramRunner(String text, int phraseCount, int pageCount, int wordCountPerPhrase, double percentageThreshold) {
         this.text = text;
-        this.phraseCount = 10;
-        this.pageCount = 1;
-        this.wordCountPerPhrase = 10;
-        this.percentageThreshold = 50;
+        this.phraseCount = phraseCount;
+        this.pageCount = pageCount;
+        this.wordCountPerPhrase = wordCountPerPhrase;
+        this.percentageThreshold = percentageThreshold;
     }
 
-    public void runProgram() {
+    public void run() {
         showPlagiarized(new PhraseExtractor(wordCountPerPhrase).getRandomPhrases(text, phraseCount),
-                new GoogleSearch(), new TextComparer(percentageThreshold));
+                new GoogleSearch(), new SimilarityChecker(percentageThreshold));
     }
 
-    private void showPlagiarized(List<String> phrases, GoogleSearch googleSearch, TextComparer textComparer) {
+    private void showPlagiarized(List<String> phrases, GoogleSearch googleSearch, SimilarityChecker similarityChecker) {
         for (int i = 0; i < phraseCount; i++) {
             googleSearch.loadFirstPages(phrases.get(i), pageCount)
                     .forEach(page -> {
-                        if (textComparer.isPlagiarized(text, page)) {
-                            printResults(page);
+                        if (similarityChecker.isPlagiarized(text, page)) {
+                            showResults(page);
                         }
                     });
         }
     }
 
     //TODO frontend
-    private void printResults(PageResult page) {
-        System.out.println("Link: " + page.getLink() + " ");
+    private void showResults(PageResult page) {
+        System.out.println("Link: " + page.getUrl() + " ");
         System.out.println("Plagiarism percentage: " + page.getPlagiarismPercentage() + " \n");
     }
 }

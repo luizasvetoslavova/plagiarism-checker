@@ -6,6 +6,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import javax.net.ssl.SSLHandshakeException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -47,7 +48,9 @@ public class GoogleSearch {
                     try {
                         Document doc2 = Jsoup.connect(link).ignoreContentType(true).get();
                         return new PageResult(link, doc2.text());
-                    } catch (HttpStatusException e) {
+                    } catch (HttpStatusException | SSLHandshakeException e) {
+                        return null;
+                    } catch (IOException f) {
                         return null;
                     }
                 }
