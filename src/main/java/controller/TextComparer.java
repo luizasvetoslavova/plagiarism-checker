@@ -1,5 +1,4 @@
 package controller;
-
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -57,7 +56,6 @@ public class TextComparer {
                 simHash |= (1L << (63 - i));
             }
         }
-
         return simHash;
     }
 

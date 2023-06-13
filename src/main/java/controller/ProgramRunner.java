@@ -6,21 +6,19 @@ public class ProgramRunner {
     String text;
     int phraseCount;
     int pageCount;
-    int minWordCount;
-    int maxWordCount;
+    int wordCountPerPhrase;
     double percentageThreshold;
 
     public ProgramRunner(String text) {
         this.text = text;
-        this.phraseCount = 1;
+        this.phraseCount = 10;
         this.pageCount = 1;
-        this.minWordCount = 15;
-        this.maxWordCount = 20;
+        this.wordCountPerPhrase = 10;
         this.percentageThreshold = 50;
     }
 
     public void runProgram() {
-        showPlagiarized(new PhraseExtractor().getRandomPhrases(text, phraseCount, minWordCount, maxWordCount),
+        showPlagiarized(new PhraseExtractor(wordCountPerPhrase).getRandomPhrases(text, phraseCount),
                 new GoogleSearch(), new TextComparer(percentageThreshold));
     }
 

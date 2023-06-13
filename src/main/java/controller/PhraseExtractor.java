@@ -7,33 +7,29 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 public class PhraseExtractor {
+    private final int wordCountPerPhrase;
 
-    private int maxWordCountToIndex;
+    public PhraseExtractor(int wordCountPerPhrase) {
+        this.wordCountPerPhrase = wordCountPerPhrase;
+    }
 
-    public List<String> getRandomPhrases(String text, int phraseCount, int minWordCount, int maxWordCount) {
+    public List<String> getRandomPhrases(String text, int phraseCount) {
         List<String> randomPhrases = new ArrayList<>();
 
         for (int i = 0; i < phraseCount; i++) {
-            randomPhrases.add(getRandomPhrase(text, minWordCount, maxWordCount));
+            randomPhrases.add(getRandomPhrase(text));
         }
         return randomPhrases;
     }
 
-    private String getRandomPhrase(String text, int minWordCount, int maxWordCount) {
+    private String getRandomPhrase(String text) {
         List<String> words = (Arrays.stream(text.split(" ")).collect(Collectors.toList()));
-
-        int firstWordIndex = new Random().nextInt(words.size() - maxWordCountToIndex);
-        int wordCount = getRandomWordCount(minWordCount, maxWordCount);
+        int firstWordIndex = new Random().nextInt((words.size() - wordCountPerPhrase) + 1);
 
         StringBuilder randomPhrase = new StringBuilder();
-        for (int i = 0; i < wordCount; i++) {
+        for (int i = 0; i < wordCountPerPhrase; i++) {
             randomPhrase.append(words.get(firstWordIndex + i)).append(" ");
         }
         return randomPhrase.toString();
-    }
-
-    private int getRandomWordCount(int min, int max) {
-        this.maxWordCountToIndex = max - 1;
-        return new Random().nextInt(max + 1 - min) + min;
     }
 }

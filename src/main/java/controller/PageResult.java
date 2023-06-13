@@ -1,7 +1,6 @@
 package controller;
 
 public class PageResult {
-
     private final String link;
     private final String text;
     private double plagiarismPercentage;
