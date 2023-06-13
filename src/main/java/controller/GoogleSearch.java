@@ -17,13 +17,22 @@ public class GoogleSearch {
     public HashSet<PageResult> loadFirstPages(String query, int pageCount) {
         HashSet<PageResult> pages = new HashSet<>();
 
-        for(int i = 0; i < pageCount; i++) {
-            pages.add(loadPage(query, i));
+        PageResult currentPage;
+        int pageIndex = 0;
+
+        while(true) {
+            currentPage = loadPage(query, pageIndex);
+            if(currentPage != null) {
+                pages.add(currentPage);
+            }
+            if(pages.size() == pageCount) {
+                break;
+            }
+            pageIndex++;
         }
         return pages;
     }
 
-    // TODO fix NullPointerException
     private static PageResult loadPage(String query, int resultIndex) {
         try {
             String encodedQuery = encodeQuery(query);
@@ -34,12 +43,12 @@ public class GoogleSearch {
             if (resultIndex < searchResults.size()) {
                 Element result = searchResults.get(resultIndex);
                 String link = extractLink(result);
-                if (!link.isEmpty()) {
+                if (link != null) {
                     try {
                         Document doc2 = Jsoup.connect(link).ignoreContentType(true).get();
                         return new PageResult(link, doc2.text());
                     } catch (HttpStatusException e) {
-                        System.out.println("Error connecting to the link: " + e.getStatusCode());
+                        return null;
                     }
                 }
             }
@@ -63,6 +72,6 @@ public class GoogleSearch {
         if (linkElement != null) {
             return linkElement.attr("href");
         }
-        return "";
+        return null;
     }
 }
