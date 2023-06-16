@@ -1,6 +1,6 @@
 package controller;
 
-import java.util.*;
+import java.util.List;
 
 public class ProgramRunner {
     String text;
@@ -19,7 +19,7 @@ public class ProgramRunner {
 
     public void run() {
         showPlagiarized(new PhraseExtractor(wordCountPerPhrase).getRandomPhrases(text, phraseCount),
-                new GoogleSearch(), new SimilarityChecker(percentageThreshold));
+                GoogleSearch.getInstance(), new SimilarityChecker(percentageThreshold));
     }
 
     private void showPlagiarized(List<String> phrases, GoogleSearch googleSearch, SimilarityChecker similarityChecker) {

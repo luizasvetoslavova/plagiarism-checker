@@ -10,10 +10,12 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.mazarineblue:MazarineBlue-WebDriver:0.1.0'
+
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
-    implementation 'org.jsoup:jsoup:1.16.1'
+    implementation 'org.jsoup:jsoup:1.15.4'
 }
 
 test {

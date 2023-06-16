@@ -15,18 +15,30 @@ import java.util.HashSet;
 
 // TODO Improve result text quality
 public class GoogleSearch {
+    private static GoogleSearch instance = null;
+
+    public static GoogleSearch getInstance() {
+        if (instance == null) {
+            instance = new GoogleSearch();
+        }
+        return instance;
+    }
+
+    private GoogleSearch() {
+    }
+
     public HashSet<PageResult> loadFirstPages(String query, int pageCount) {
         HashSet<PageResult> pages = new HashSet<>();
 
         PageResult currentPage;
         int pageIndex = 0;
 
-        while(true) {
+        while (true) {
             currentPage = loadPage(query, pageIndex);
-            if(currentPage != null) {
+            if (currentPage != null) {
                 pages.add(currentPage);
             }
-            if(pages.size() == pageCount) {
+            if (pages.size() == pageCount) {
                 break;
             }
             pageIndex++;
