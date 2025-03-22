@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Element Slider with Overlay</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .swiper {
+            width: 100%;
+            margin: 0;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: none;
+            background: white;
+            position: relative;
+        }
+        .swiper-slide {
+            position: relative;
+        }
+        .swiper-slide img {
+            width: 100%;
+            max-height: 563px;
+            object-fit: cover;
+            border-radius: 0;
+            display: block;
+        }
+        .swiper-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            text-align: center;
+        }
+        .text-container {
+            max-width: 1200px;
+            padding: 0 150px;
+            box-sizing: border-box;
+        }
+        .swiper-slide h2 {
+            font-size: 36px;
+            margin: 10px 0 20px 0;
+        }
+        .swiper-slide p {
+            font-size: 18px;
+            margin: 10px 0 40px 0;
+        }
+        .swiper-slide a {
+            padding: 12px 25px;
+            font-size: 18px;
+            background: #211FA1;
+            color: #FFFFFFE0;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: background 0.3s, color 0.3s;
+            box-shadow: 0 0 5px #34343480;
+            display: inline-block;
+        }
+        .swiper-slide a:hover {
+            background: #BBEFFA8C;
+            color: #000000;
+        }
+        .swiper-button-next, .swiper-button-prev {
+            color: #ffffff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-top: -20px;
+            transition: background 0.3s ease;
+        }
+
+        .swiper-button-next {
+            right: 20px;
+        }
+        .swiper-button-prev {
+            left: 20px;
+        }
+        .swiper-button-next:after, .swiper-button-prev:after {
+            font-size: 20px;
+        }
+        .custom-pagination {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            gap: 10px;
+        }
+        .custom-pagination .dot {
+            width: 10px;
+            height: 10px;
+            background: #007bff;
+            border-radius: 50%;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+        .custom-pagination .dot.active {
+            opacity: 1;
+            transform: scale(1.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .text-container {
+                padding: 0 50px;
+            }
+            .swiper-slide h2 {
+                font-size: 28px;
+            }
+            .swiper-slide p {
+                font-size: 16px;
+                margin-bottom: 30px;
+            }
+            .swiper-slide a {
+                padding: 10px 20px;
+                font-size: 16px;
+            }
+            .swiper-slide img {
+                max-height: 400px;
+            }
+            .custom-pagination {
+                bottom: 15px;
+            }
+        }
+        @media (max-width: 480px) {
+            .text-container {
+                padding: 0 20px;
+            }
+            .swiper-slide h2 {
+                font-size: 20px;
+            }
+            .swiper-slide p {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+            .swiper-slide a {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+            .swiper-slide img {
+                max-height: 300px;
+            }
+            .custom-pagination {
+                bottom: 10px;
+            }
+            .custom-pagination .dot {
+                width: 8px;
+                height: 8px;
+                margin: 0 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Swiper Container -->
+<div class="swiper">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2024/11/шевове-и-възли.jpg" alt="Slide 1">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>Шевове и възли</h2>
+                    <p>Присъединете се към нашия уоркшоп „Шевове и възли “*, където ще подобрим уменията ви и ще ви завържем на възли (в добрия смисъл на думата)! Перфектен начин да направите своите първи крачки в хирургията.</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2024/11/ехография-на-щитовидна-жлеза.jpg" alt="Slide 2">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>Ехо на вътрешни органи</h2>
+                    <p>Готови ли сте да надникнете вътре? Присъединете се към нашия уъркшоп „*Ехо-логия*“ и открийте изкуството на ехографията - където превръщаме ултразвука в забавни звукови вълни! При създаването на този уъркшоп няма пострадали части от тялото!</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2024/11/катетаризация-1.jpg" alt="Slide 3">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>Катетаризация</h2>
+                    <p>Преминете към *точката* с нашия по катетеризация! Независимо дали сте новак, или просто имате нужда от опресняване на знанията, ние ще ви научим на деликатното изкуство на поставянето на катетър с минимална неловкост и максимални умения. Не се притеснявайте, всичко е практически насочено - но обещаваме, щоникой няма да бъде прободен без разрешение!</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2024/11/cpr.реанимация1.jpg" alt="Slide 4">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>CPR</h2>
+                    <p>Вземете участие в семинара по CPR и научете как да бъдете герой в спешен случай! Ще бъдете въведени в първите стъпки в спасяванто на човешки живот.</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2024/11/травматология.jpg" alt="Slide 5">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>Травматология</h2>
+                    <p>Готови ли сте да навлезете в света на травматологията? Присъединете се към нашия семинар и научете как да се справяте с фрактури, навяхвания и всички други неща, свързани с травми. Разберете как да се справяте с нараняванията като професионалист - не е необходима пелерина на супергерой, а само солидни познания и стабилна ръка!</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2025/03/статус-и-анамнеза.jpg" alt="Slide 7">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>Статус и анамнеза</h2>
+                    <p>Включете се в нашия уоркшоп *Статус и анамнеза* - където ще разберете как да задавате правилните въпроси и да четете между редовете. Научете се да събирате историята за здравето на пациента като детектив в медицинска загадка, без лупа!</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2024/11/екг.jpg" alt="Slide 8">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>ЕКГ</h2>
+                    <p>Готови ли сте да *разкодирате* ритъма на живота? Присъединете се към нашия уоркшоп за ЕКГ и научете как да разчитате сърдечните удари по-бързо от кардиолог!</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2024/11/онкология1.jpg" alt="Slide 9">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>Онкология</h2>
+                    <p>Заповядайте в нашата онкологична работилница, където се справяме с рака със знания, грижа и щипка хумор. Научете се как да се борите с голямото „С“, като науката е на ваша страна - защото спасяването на живот не трябва да бъде само сериозна работа!</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2024/11/хематология.jpg" alt="Slide 10">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>Хематология</h2>
+                    <p>Присъединете се към нашия уъркшоп по хематология и се запознайте с "вътрешната страна" на кръвта! Научете повече за червените и белите кръвни телца, както и за всичко между тях, защото когато става въпрос за кръв, ние се стремим да поддържаме гладкото протичане на нещата!</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2024/11/снемане-на-зъбен-отпечатък.jpg" alt="Slide 11">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>Снемане на зъбен отпечатък</h2>
+                    <p>Готови ли сте да оставите своя отпечатък? Присъединете се към нашия уъркшоп за зъбни отпечатъци и научете как да уловите перлените си бели зъби в съвършен детайл! Въпросът е да се получи перфектната отливка - без зяпане, без драма, само зъболекарска прецизност с усмивка!</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2024/11/композитно-възстановяване-на-зъби.jpeg" alt="Slide 12">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>Композитни възстановявания на зъби</h2>
+                    <p>Готови ли сте да направите зъбите си съвсем нови? Нашият семинар за композитни възстановявания ви учи как да запълвате кариеси с прецизността на скулптор и финеса на зъболекар. Това е като мини преобразяване на зъбите - без драма в риалити шоу, само безупречни резултати!</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2024/11/ехография-на-щитовидна-жлеза.jpg" alt="Slide 13">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>Ехография на щитовидна жлеза</h2>
+                    <p>Присъединете се към нашия семинар по ехография на щитовидната жлеза и научете как да сканирате малката жлеза, която върши големи неща! Ще ви научим как да откривате възли, бучки и всички тайни, скрити в тази област - без нужда от лупа, само с малко ултразвукова магия!</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Pagination with 3 Dots -->
+    <div class="custom-pagination">
+        <span class="dot" data-index="0"></span>
+        <span class="dot active" data-index="1"></span>
+        <span class="dot" data-index="2"></span>
+    </div>
+
+    <!-- Navigation -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+</div>
+
+<!-- Swiper.js Script -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    // Initialize Swiper
+    var swiper = new Swiper(".swiper", {
+        slidesPerView: 1,
+        spaceBetween: 10, // Fixed: Changed semicolon to comma
+        loop: true,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false
+        },
+        speed: 800,
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+    });
+
+    // Custom Pagination Logic with Rotating Animation
+    const dots = document.querySelectorAll('.custom-pagination .dot');
+    const totalSlides = swiper.slides.length;
+
+    function updateDots() {
+        const activeIndex = swiper.realIndex;
+
+        const prevIndex = (activeIndex - 1 + totalSlides) % totalSlides;
+        const nextIndex = (activeIndex + 1) % totalSlides;
+
+        dots.forEach(dot => dot.classList.remove('active'));
+
+        dots[0].setAttribute('data-slide', prevIndex);
+        dots[1].setAttribute('data-slide', activeIndex);
+        dots[2].setAttribute('data-slide', nextIndex);
+
+        dots[1].classList.add('active');
+
+        dots.forEach((dot, i) => {
+            dot.style.transition = 'all 0.3s ease';
+            if (i === 0) dot.style.transform = 'translateX(0)';
+            if (i === 1) dot.style.transform = 'translateX(0) scale(1.3)';
+            if (i === 2) dot.style.transform = 'translateX(0)';
+        });
+    }
+
+    dots.forEach((dot) => {
+        dot.addEventListener('click', () => {
+            const slideToGo = parseInt(dot.getAttribute('data-slide'), 10);
+            swiper.slideToLoop(slideToGo);
+        });
+    });
+
+    swiper.on('slideChangeTransitionStart', () => {
+        dots[0].style.transform = 'translateX(-20px)';
+        dots[2].style.transform = 'translateX(20px)';
+    });
+
+    swiper.on('slideChangeTransitionEnd', updateDots);
+
+    updateDots();
+</script>
+
+</body>
+</html>
