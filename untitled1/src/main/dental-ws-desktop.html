@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Element Slider with Overlay</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .swiper {
+            width: 100%;
+            margin: 0;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: none;
+            background: white;
+            position: relative;
+        }
+        .swiper-slide {
+            position: relative;
+        }
+        .swiper-slide img {
+            width: 100%;
+            max-height: 600px;
+            object-fit: cover;
+            border-radius: 0;
+            display: block;
+        }
+        .swiper-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            text-align: center;
+        }
+        .text-container {
+            max-width: 1200px;
+            padding: 0 150px;
+            box-sizing: border-box;
+        }
+        .swiper-slide h2 {
+            font-size: 36px;
+            margin: 10px 0 20px 0;
+        }
+        .swiper-slide p {
+            font-size: 18px;
+            margin: 10px 0 20px 0; /* Adjusted margin to accommodate important note */
+        }
+        .swiper-slide p.important {
+            font-size: 17px;
+            margin: 0 0 40px 0; /* Space before button */
+        }
+        .swiper-slide a {
+            padding: 12px 25px;
+            font-size: 18px;
+            background: #211FA1;
+            color: #FFFFFFE0;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: background 0.3s, color 0.3s;
+            box-shadow: 0 0 5px #34343480;
+            display: inline-block;
+        }
+        .swiper-slide a:hover {
+            background: #BBEFFA8C;
+            color: #000000;
+        }
+        .swiper-button-next, .swiper-button-prev {
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-top: -20px;
+            transition: background 0.3s ease;
+        }
+        .swiper-button-next:hover, .swiper-button-prev:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .swiper-button-next {
+            right: 20px;
+        }
+        .swiper-button-prev {
+            left: 20px;
+        }
+        .swiper-button-next:after, .swiper-button-prev:after {
+            font-size: 20px;
+        }
+        .custom-pagination {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            gap: 10px;
+        }
+        .custom-pagination .dot {
+            width: 10px;
+            height: 10px;
+            background: #007bff;
+            border-radius: 50%;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+        .custom-pagination .dot.active {
+            opacity: 1;
+            transform: scale(1.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .text-container {
+                padding: 0 50px;
+            }
+            .swiper-slide h2 {
+                font-size: 28px;
+            }
+            .swiper-slide p {
+                font-size: 16px;
+                margin-bottom: 15px;
+            }
+            .swiper-slide p.important {
+                font-size: 14px;
+                margin-bottom: 30px;
+            }
+            .swiper-slide a {
+                padding: 10px 20px;
+                font-size: 16px;
+            }
+            .swiper-slide img {
+                max-height: 400px;
+            }
+            .custom-pagination {
+                bottom: 15px;
+            }
+        }
+        @media (max-width: 480px) {
+            .text-container {
+                padding: 0 20px;
+            }
+            .swiper-slide h2 {
+                font-size: 20px;
+            }
+            .swiper-slide p {
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+            .swiper-slide p.important {
+                font-size: 12px;
+                margin-bottom: 20px;
+            }
+            .swiper-slide a {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+            .swiper-slide img {
+                max-height: 300px;
+            }
+            .custom-pagination {
+                bottom: 10px;
+            }
+            .custom-pagination .dot {
+                width: 8px;
+                height: 8px;
+                margin: 0 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Swiper Container -->
+<div class="swiper">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2023/10/8.-Lasers-101.jpg" alt="Slide 1">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>Lasers 101</h2>
+                    <p>Using lasers in everyday practice is not commonly known in dentistry. But here you will get the chance to see first hand the many advantages lasers have to offer in the dental profession.</p>
+                    <p class="important">!!! IMPORTANT !!! If you sign up for this workshop you cannot sign up for “Simple immediate implant placement. Focus on socket seal abutment and soft tissue preservation.”</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2024/11/2.-Immediate-implant-palcement.jpg" alt="Slide 2">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>Simple immediate implant placement. Focus on socket seal abutment and soft tissue preservation.</h2>
+                    <p>Master the art of immediate implant placement! This workshop focuses on using socket seal abutments to preserve soft tissue and enhance esthetics after extraction. Learn key techniques for achieving predictable, beautiful results with minimal healing time.</p>
+                    <p class="important">!!! IMPORTANT !!! If you sign up for this workshop you cannot sign up for “Lasers 101”.</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2024/11/3.-Predictable-and-anatomical-restoration-Class-2.jpg" alt="Slide 3">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>Predictable and Anatomical Restoration of Class 2 Contact Point with Palodent V3 and 360</h2>
+                    <p>Discover the tricks to achieving flawless, predictable Class 2 restorations. Get ready to master contact points that fit like a dream every time!</p>
+                    <p class="important">!!! IMPORTANT !!! If you sign up for this workshop you cannot sign up for “How to Avoid Early Mistakes in Machine Instrumentation”, “Bonding under a microscope. Cross-polarization, shade determination” and “Digital scanning with the last generation Itero-Lumina”.</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2024/11/4.-How-to-avoid-early-mistakes-.jpg" alt="Slide 4">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>How to Avoid Early Mistakes in Machine Instrumentation</h2>
+                    <p>A workshop to help you skip the trial and error! Learn the common pitfalls in machine instrumentation and how to get it right from the start for smooth, error-free procedures.</p>
+                    <p class="important">!!! IMPORTANT !!! If you sign up for this workshop you cannot sign up for “Predictable and Anatomical Restoration of Class 2 Contact Point with Palodent V3 and 360”, “Bonding under a microscope. Cross-polarization, shade determination” and “Digital scanning with the last generation Itero-Lumina”.</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2024/11/5.-Digital-Scanning-with-Itero-lumina.png" alt="Slide 5">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>Digital Scanning with the last generation Itero-Lumina</h2>
+                    <p>Explore the world of high-tech scanning and master the art of spotting hidden approximal cavities. Capture flawless impressions and detect caries with ease, taking your diagnostic skills to the next level!</p>
+                    <p class="important">!!! IMPORTANT !!! If you sign up for this workshop you cannot sign up for “How to Avoid Early Mistakes in Machine Instrumentation”, “Predictable and Anatomical Restoration of Class 2 Contact Point with Palodent V3 and 360” and “Bonding under a microscope. Cross-polarization, shade determination”.</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2024/11/6.-Bonding-under-a-microscope-.jpg" alt="Slide 6">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>Bonding under a Microscope. Cross-polarization, shade determination.</h2>
+                    <p>Dive into the art of bonding under the microscope, using cross-polarization and precise shade matching to achieve lifelike, seamless restorations. Perfect for those aiming for perfection in dental aesthetics!</p>
+                    <p class="important">!!! IMPORTANT !!! If you sign up for this workshop you cannot sign up for “How to Avoid Early Mistakes in Machine Instrumentation”, “Predictable and Anatomical Restoration of Class 2 Contact Point with Palodent V3 and 360” and “Digital Scanning with the last generation Itero-Lumina”.</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2024/11/7.-iTOP.avif" alt="Slide 7">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>iTOP(Individually Trained Oral Prophylaxis)</h2>
+                    <p>Create a personalized approach to oral hygiene training, focusing on effective techniques for optimal oral health. Learn how individualized methods can elevate patient care and long-term dental wellness.</p>
+                    <p class="important">!!! IMPORTANT !!! If you sign up for this workshop you cannot sign up for “Digitally guided Implantology- Planning and Implant Placement with a Surgical Guide”.</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2024/11/8.-Digitally-guided-implantology.jpg" alt="Slide 8">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>Digitally guided Implantology- Planning and Implant Placement with a Surgical Guide</h2>
+                    <p>Discover the power of digital tools in implantology. This workshop covers everything from virtual planning to using surgical guides for precise, predictable implant placements.</p>
+                    <p class="important">!!! IMPORTANT !!! If you sign up for this workshop you cannot sign up for “iTOP(Individually Trained Oral Prophylaxis)”.</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2024/11/9.-Sutures.jpg" alt="Slide 9">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>Sutures</h2>
+                    <p>This Suturing Skills Workshop is a hands-on session to master essential suturing techniques for precise, secure wound closure. Perfect for refining your skills with expert tips on stitching like a pro!</p>
+                    <p class="important">!!! IMPORTANT !!! If you sign up for this workshop you cannot sign up for “BONDING- finesse in the details, how bonding transforms the smile and self-confidence” and “Kofferdame- why, when and how?”.</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2024/11/10.-Kofferdame.jpg" alt="Slide 10">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>Kofferdame- why, when and how?</h2>
+                    <p>Uncover the secrets to stress-free isolation! Learn when to use it, how to place it, and why it’s your best friend for smooth, mess-free procedures. Say goodbye to moisture and hello to control!</p>
+                    <p class="important">!!! IMPORTANT !!! If you sign up for this workshop you cannot sign up for “BONDING- finesse in the details, how bonding transforms the smile and self-confidence” and “Sutures”.</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2024/11/11.-BONDING-finesse-in-details.jpg" alt="Slide 11">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>BONDING- finesse in the details, how bonding transforms the smile and self-confidence</h2>
+                    <p>This workshop explores the power of detailed bonding techniques to elevate smiles and enhance self-esteem. Learn how the smallest details can make the biggest difference!</p>
+                    <p class="important">!!! IMPORTANT !!! If you sign up for this workshop you cannot sign up for “Sutures” and “Kofferdame-why, when and how?”.</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2024/11/12.-Anterior-Bonding.jpg" alt="Slide 12">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>Anterior Bonding</h2>
+                    <p>Bright Smiles Ahead – a practical session for mastering the art of bonding front teeth. Learn techniques to create natural, beautiful smiles that dazzle!</p>
+                    <p class="important">!!! IMPORTANT !!! If you sign up for this workshop you cannot sign up for “Attachment Placement for Clear Aligners: A Workshop for Future Orthodontists”.</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="https://ibc-sofia.org/wp-content/uploads/2024/11/Aligner-attachment-placement.webp" alt="Slide 13">
+            <div class="swiper-overlay">
+                <div class="text-container">
+                    <h2>Attachment Placement for Clear Aligners: A Workshop for Future Orthodontists</h2>
+                    <p>Stick It Right! It’s a hands-on workshop for future orthodontists to master the art of tiny, powerful attachments that make aligners work their magic.</p>
+                    <p class="important">!!! IMPORTANT !!! If you sign up for this workshop you cannot sign up for “Anterior Bonding”.</p>
+                    <a href="https://workshops.ibc-sofia.org/">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Pagination with 3 Dots -->
+    <div class="custom-pagination">
+        <span class="dot" data-index="0"></span>
+        <span class="dot active" data-index="1"></span>
+        <span class="dot" data-index="2"></span>
+    </div>
+
+    <!-- Navigation -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+</div>
+
+<!-- Swiper.js Script -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    // Initialize Swiper
+    var swiper = new Swiper(".swiper", {
+        slidesPerView: 1,
+        spaceBetween: 10,
+        loop: true,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false
+        },
+        speed: 800,
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+    });
+
+    // Custom Pagination Logic with Rotating Animation
+    const dots = document.querySelectorAll('.custom-pagination .dot');
+    const totalSlides = swiper.slides.length;
+
+    function updateDots() {
+        const activeIndex = swiper.realIndex;
+
+        const prevIndex = (activeIndex - 1 + totalSlides) % totalSlides;
+        const nextIndex = (activeIndex + 1) % totalSlides;
+
+        dots.forEach(dot => dot.classList.remove('active'));
+
+        dots[0].setAttribute('data-slide', prevIndex);
+        dots[1].setAttribute('data-slide', activeIndex);
+        dots[2].setAttribute('data-slide', nextIndex);
+
+        dots[1].classList.add('active');
+
+        dots.forEach((dot, i) => {
+            dot.style.transition = 'all 0.3s ease';
+            if (i === 0) dot.style.transform = 'translateX(0)';
+            if (i === 1) dot.style.transform = 'translateX(0) scale(1.3)';
+            if (i === 2) dot.style.transform = 'translateX(0)';
+        });
+    }
+
+    dots.forEach((dot) => {
+        dot.addEventListener('click', () => {
+            const slideToGo = parseInt(dot.getAttribute('data-slide'), 10);
+            swiper.slideToLoop(slideToGo);
+        });
+    });
+
+    swiper.on('slideChangeTransitionStart', () => {
+        dots[0].style.transform = 'translateX(-20px)';
+        dots[2].style.transform = 'translateX(20px)';
+    });
+
+    swiper.on('slideChangeTransitionEnd', updateDots);
+
+    updateDots();
+</script>
+
+</body>
+</html>
